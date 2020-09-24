@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.pge.ecm.crmis.CrmisLiteApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.537 s - in com.pge.ecm.crmis.CrmisLiteApplicationTests

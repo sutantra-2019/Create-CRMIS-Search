@@ -1,0 +1,31 @@
+version: 0.2
+phases:
+  install:
+    commands:
+       - echo 'Nothing To Install .. All the required softwares are available in Custom Image'
+       - apt-get update -y       
+       - apt-get install awscli -y
+       - apt-get install -y curl
+       - curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.12.7/2019-03-27/bin/linux/amd64/aws-iam-authenticator
+       - curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+       - curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 > get_helm.sh
+       - chmod +x ./aws-iam-authenticator
+       - chmod +x kubectl
+       - chmod 700 get_helm.sh
+       - mv ./aws-iam-authenticator /usr/local/bin/aws-iam-authenticator
+       - mv ./kubectl /usr/local/bin/kubectl
+       - /bin/bash get_helm.sh       
+  pre_build:
+    commands:
+      - echo 'In Pre-Build Stage'
+      - mkdir ~/.kube/     
+      - aws eks update-kubeconfig --name $AWS_EKS_Cluster --role-arn $AWS_Lambda_Role_ARN
+      - $(aws ecr get-login --no-include-email --region $AWS_Region)
+  build:
+    commands:
+      - echo 'IN Build Stage'
+      - docker pull $AWS_ECR_Image:$AWS_ECR_Image_Tag
+  post_build:
+    commands:
+      - echo 'IN Post-Build Stage'
+      - kubectl run $AWS_EKS_Pod_Name --image=$AWS_ECR_Image:$AWS_ECR_Image_Tag --port=$AWS_EKS_Service_Port -n $AWS_EKS_NameSpace

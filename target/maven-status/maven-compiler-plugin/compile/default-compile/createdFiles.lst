@@ -1,0 +1,4 @@
+com/pge/ecm/crmis/controller/CRMISController.class
+com/pge/ecm/crmis/service/SearchService.class
+com/pge/ecm/crmis/CrmisLiteApplication.class
+com/pge/ecm/crmis/dfc/SessionManager.class

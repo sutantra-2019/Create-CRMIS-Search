@@ -1,0 +1,26 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - echo 'Nothing To Install'
+  pre_build:
+    commands:
+      - echo 'Nothing To Do In Pre Build'
+  build:
+    commands:
+      - echo '-----------------------------------------------------------------------------------------'
+      - echo 'Creating JAR File for CRMIS Search Microservice'
+      - echo '-----------------------------------------------------------------------------------------'	  
+      - mvn package
+      - echo '-----------------------------------------------------------------------------------------'
+      - echo 'JAR file got Created and Need to Push to Artifacts'
+      - echo '-----------------------------------------------------------------------------------------'
+  post_build:
+    commands:
+      - echo 'Nothing To Do In Post Build'
+      - ls -lrt      
+artifacts:
+  files:
+    - 'target/*.jar'
+    - 'create_img_buildspec.yml'
+    - 'Dockerfile'    
